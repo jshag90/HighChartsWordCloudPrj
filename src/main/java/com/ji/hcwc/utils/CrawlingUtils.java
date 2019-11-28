@@ -9,12 +9,8 @@ import org.jsoup.select.Elements;
 
 public class CrawlingUtils {
 
-	static String addr;
-	public CrawlingUtils(String addr) {
-		this.addr = addr;
-	}
 	
-	public static String crawlingSingTexts() {
+	public static String crawlingSingTexts(String addr) {
 		Document doc = null;
 		String textResult = "";
 
@@ -24,14 +20,27 @@ public class CrawlingUtils {
 			e1.printStackTrace();
 		}
 
-		Elements elements = doc.select("div.mw-body-content div.mw-content-ltr div.mw-parser-output dl");
+		Elements elements = doc.select("article.container");
 
 		for (Element e : elements) {
-			String signTexts = StringUtils.StringReplace(e.text());
+			String signTexts = e.text();
 			textResult += signTexts;
 		}
+		
+		String[] filterArr = textResult.split(" ");
+		String filterResultText = "";
+		for(String filStr:filterArr) {
+//			System.out.println(filStr +":"+filStr.length());
+			filStr = StringUtils.StringReplace(filStr);
+			filStr = StringUtils.StringEngReplace(filStr);
+			
+			if(StringUtils.checkStringSubWord(filStr)) 
+				continue;
+			else
+				filterResultText += filStr+" ";
+		}
 
-		return textResult;
+		return filterResultText;
 	}
 
 
