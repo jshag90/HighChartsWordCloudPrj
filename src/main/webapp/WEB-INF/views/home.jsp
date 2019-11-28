@@ -44,7 +44,7 @@ $(function(){
 				name : '빈도수'
 			} ],
 			title : {
-				text : 'Wordcloud'
+				text : '워드클라우드(Wordcloud)'
 			}
 		});
 
